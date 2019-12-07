@@ -6,16 +6,16 @@ namespace SfpTest\PHPStan\PDO;
 
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use Sfp\PHPStan\PDO\PDOStatementExecuteMethodRule;
+use Sfp\PHPStan\PDO\DisallowPDOStatementExecuteCallWithParameterRule;
 
 /**
- * @extends RuleTestCase<PDOStatementExecuteMethodRule>
+ * @extends RuleTestCase<DisallowPDOStatementExecuteCallWithParameterRule>
  */
-final class PDOStatementExecuteMethodRuleTest extends RuleTestCase
+final class DisallowPDOStatementExecuteCallWithParameterRuleTest extends RuleTestCase
 {
     protected function getRule() : Rule
     {
-        return new PDOStatementExecuteMethodRule();
+        return new DisallowPDOStatementExecuteCallWithParameterRule();
     }
 
     /** @test */

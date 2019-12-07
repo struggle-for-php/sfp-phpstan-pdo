@@ -1,2 +1,2 @@
 rules:
-	- Sfp\AngryRegex\AngryRegularExpressionPatternRule
+	- Sfp\PHPStan\PDO\DisallowPDOStatementExecuteCallWithParameterRule

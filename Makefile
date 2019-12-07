@@ -18,5 +18,4 @@ infection: ## Run infection
 	phpdbg -qrr ./vendor/bin/infection --no-progress
 
 .PHONY: all
-all: cs-check phpstan ## Run all checks
-
+all: cs-check phpstan infection ## Run all checks

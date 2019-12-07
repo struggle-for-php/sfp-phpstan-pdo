@@ -15,7 +15,7 @@ use function count;
 /**
  * @implements Rule<MethodCall>
  */
-class PDOStatementExecuteMethodRule implements Rule
+class DisallowPDOStatementExecuteCallWithParameterRule implements Rule
 {
     public function getNodeType() : string
     {
