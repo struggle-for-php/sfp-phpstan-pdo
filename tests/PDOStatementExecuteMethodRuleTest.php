@@ -28,7 +28,7 @@ final class PDOStatementExecuteMethodRuleTest extends RuleTestCase
             [
                 [
                     'PDOStatement::execute() with parameters is risky',
-                    27,
+                    28,
                 ],
             ]
         );

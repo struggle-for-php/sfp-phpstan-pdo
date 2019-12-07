@@ -8,9 +8,7 @@ use PDO;
 
 class PdoExecutor
 {
-    /**
-     * @var PDO
-     */
+    /** @var PDO */
     private $pdo;
 
     public function __construct(PDO $pdo)

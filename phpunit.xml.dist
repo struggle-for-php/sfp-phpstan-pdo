@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="sfp-phpstan-pdo Test Suite">
-            <directory>./tests/src</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
