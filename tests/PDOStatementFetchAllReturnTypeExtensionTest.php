@@ -20,7 +20,7 @@ use PHPStan\Type\Type;
 use Sfp\PHPStan\PDO\PDOStatementFetchAllReturnTypeExtension;
 use SfpTest\PHPStan\PDO\Asset\Entity;
 
-final class PDOStatementFetchReturnTypeExtensionTest extends TestCase
+final class PDOStatementFetchAllReturnTypeExtensionTest extends TestCase
 {
     /** @var PDOStatementFetchAllReturnTypeExtension */
     private $extension;
@@ -84,7 +84,7 @@ final class PDOStatementFetchReturnTypeExtensionTest extends TestCase
                 'scopeResolveReturn' => function () : Type {
                     return new ConstantIntegerType(PDO::FETCH_CLASS);
                 },
-                'expectedType'       => ObjectType::class,
+                'expectedType'       => ArrayType::class,
             ],
         ];
     }

@@ -61,7 +61,9 @@ final class PDOStatementFetchAllReturnTypeExtension implements DynamicMethodRetu
             case PDO::FETCH_NUM: // 3
                 return new Type\ArrayType(new Type\IntegerType(), new Type\StringType());
             case PDO::FETCH_CLASS: //8
-                return new Type\ObjectType($className);
+                return new Type\ArrayType(
+                    new Type\IntegerType(), new Type\ObjectType($className)
+                );
         }
 
         //        return $scope->getType($arg);
