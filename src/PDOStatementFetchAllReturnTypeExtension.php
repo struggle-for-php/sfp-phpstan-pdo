@@ -7,6 +7,7 @@ namespace Sfp\PHPStan\PDO;
 use PDO;
 use PDOStatement;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type;
@@ -16,7 +17,10 @@ use stdClass;
 use function count;
 //use PHPStan\Type\Type;
 
-final class PDOStatementFetchReturnTypeExtension implements DynamicMethodReturnTypeExtension
+/**
+ * @see http://php.net/pdostatement.fetchall
+ */
+final class PDOStatementFetchAllReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass() : string
     {
@@ -25,7 +29,7 @@ final class PDOStatementFetchReturnTypeExtension implements DynamicMethodReturnT
 
     public function isMethodSupported(MethodReflection $methodReflection) : bool
     {
-        return $methodReflection->getName() === 'fetch';
+        return $methodReflection->getName() === 'fetchAll';
     }
 
     public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : Type\Type
@@ -44,6 +48,11 @@ final class PDOStatementFetchReturnTypeExtension implements DynamicMethodReturnT
         }
 
         $className = stdClass::class;
+        if (isset($methodCall->args[1])) {
+            $classNameString = $methodCall->args[1]->value;
+            assert($classNameString instanceof String_);
+            $className = $classNameString->value;
+        }
 
         // todo resolve Bitwise Or
         switch ($fetchStyle) {
