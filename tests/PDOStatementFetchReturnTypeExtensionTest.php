@@ -32,12 +32,12 @@ final class PDOStatementFetchReturnTypeExtensionTest extends TestCase
      * @test
      * @dataProvider provideFetchMethodCallPatterns
      */
-    public function fetchMethodShouldReturn(array $args, callable $scopeResolveReturn, $expectedType) : void
+    public function fetchMethodShouldReturn(array $args, callable $scopeGetType, $expectedType) : void
     {
         $methodReflection = $this->createMock(MethodReflection::class);
         $scope            = $this->createMock(Scope::class);
         $scope->method('getType')->will(
-            self::returnCallback($scopeResolveReturn)
+            self::returnCallback($scopeGetType)
         );
 
         $methodCall       = $this->createMock(Expr\MethodCall::class);
@@ -60,7 +60,7 @@ final class PDOStatementFetchReturnTypeExtensionTest extends TestCase
                         new Identifier('FETCH_ASSOC')
                     )),
                 ],
-                'scopeResolveReturn' => function () : Type {
+                'scopeGetType' => function () : Type {
                     return new ConstantIntegerType(PDO::FETCH_ASSOC);
                 },
                 'expectedType'       => ArrayType::class,
@@ -72,7 +72,7 @@ final class PDOStatementFetchReturnTypeExtensionTest extends TestCase
                         new Identifier('FETCH_CLASS')
                     )),
                 ],
-                'scopeResolveReturn' => function () : Type {
+                'scopeGetType' => function () : Type {
                     return new ConstantIntegerType(PDO::FETCH_CLASS);
                 },
                 'expectedType'       => ObjectType::class,

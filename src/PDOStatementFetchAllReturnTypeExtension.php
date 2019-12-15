@@ -6,7 +6,10 @@ namespace Sfp\PHPStan\PDO;
 
 use PDO;
 use PDOStatement;
+use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
@@ -15,7 +18,6 @@ use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use stdClass;
 
 use function count;
-//use PHPStan\Type\Type;
 
 /**
  * @see http://php.net/pdostatement.fetchall
@@ -49,9 +51,19 @@ final class PDOStatementFetchAllReturnTypeExtension implements DynamicMethodRetu
 
         $className = stdClass::class;
         if (isset($methodCall->args[1])) {
-            $classNameString = $methodCall->args[1]->value;
-            assert($classNameString instanceof String_);
-            $className = $classNameString->value;
+            $argValue = $methodCall->args[1]->value;
+            $argValueType = $scope->getType($argValue);
+
+            if ($argValue instanceof String_) {
+                $className = $argValue->value;
+            }
+
+            if ($argValue instanceof ClassConstFetch
+                && $argValue->name instanceof Identifier
+                && strtolower($argValue->name->name) === 'class'
+                && $argValue->class instanceof Name){
+                $className = $scope->resolveName($argValue->class);
+            }
         }
 
         // todo resolve Bitwise Or
